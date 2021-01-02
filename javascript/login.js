@@ -14,24 +14,30 @@ $(document).ready(function () {
 function login(){
   let loginEmail = $("#loginEmail").val();
   let loginPassword = $("#loginPassword").val();
-  console.log(loginEmail, ": ", loginPassword);
+  apiUrl = setApiUrl("user", "validateLogin")
   $.ajax({
-    url: "../Api/api.php",
-    type: "POST",
-    data: {
-      entity: "customer",
-      action: "loginCustomer",
+    url: apiUrl,
+    type: POST,
+    data: JSON.stringify( {
       loginEmail: loginEmail,
       loginPassword: loginPassword
-    },
+    }),
     success: function(data){
-        console.log(data)
-        if ($.trim(data) == 'true'){
-          window.location.replace("../Html_Css/home.php");
+      console.log(data);
+      if (data.isUserValid === true){
+          console.log("TRUE");
+          //window.location.replace("index.php");
+          window.location.replace("http://localhost/Exam/Html_Css/home.php");
         } else {
-          alert("password or email not correct");
+          console.log("ALERT");
+          alert("Login credentials uncorrect");
         }
-    }
+  }, failure: function(e) {
+      console.log('failure: ' + e);
+  }, error: function(e) {
+      console.log('error: ' + e);
+      console.log(JSON.stringify(e));
+  }
   });
 }
 
@@ -49,13 +55,11 @@ function CreateUser() {
   let phone = $("#phone").val();
   let fax = $("#fax").val();
   let email = $("#email").val();
-
+  apiUrl = setApiUrl("user", "createuser");
   $.ajax({
-    url: "../Api/api.php",
-    type: "POST",
-    data: {
-      entity: "customer",
-      action: "createCustomer",
+    url: apiUrl,
+    type: POST,
+    data: JSON.stringify({
       firstName: firstName,
       lastName: lastName,
       password: password,
@@ -68,18 +72,31 @@ function CreateUser() {
       phone: phone,
       fax: fax,
       email: email
-    },
+    }),
     success: function(data) {
-      let data2 = JSON.parse(data);
-      console.log(data2)
-      if (data2 == true){
-        console.log("Hitting TRUE");
-      } else {
-        console.log("Hitting False")
-          loginRejected(email);
-      }
-      console.log(data + " Added");
-    },
+      if(data.isUserCreated == true) {
+        $('form').animate({ height: "toggle", opacity: "toggle" }, "slow");
+    } else {
+        alert("Email already exists")
+    }
+}, failure: function(e) {
+    console.log('failure: ' + e);
+}, error: function(e) {
+    console.log('error: ' + e);
+    console.log(JSON.stringify(e));
+}
+});
+
+}
+function signOut(){
+  console.log("hej");
+  apiUrl = setApiUrl("user", "sign-out");
+  $.ajax({
+    url: apiUrl,
+    type: POST,
+    success: function() {
+      window.location.reload();
+    }
   });
 }
 function loginRejected(email){

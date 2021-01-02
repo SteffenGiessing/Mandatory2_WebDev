@@ -1,5 +1,97 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
+* {
+  margin-bottom: 5px;
+  margin-top: 0;
+}
+thead tr:first-child th:first-child {
+  border-radius: 4px 0 0 0;
+}
+
+thead tr:first-child th:last-child {
+  border-radius: 0 4px 0 0;
+}
+
+tbody tr:last-child td:first-child {
+  border-radius: 0 0 0 4px;
+}
+
+tbody tr:last-child td:nth-last-child(2) {
+  border-radius: 0 0 4px 0;
+}
+.pagination {
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: -8.5px;
+}
+.pagination .search-results-box {
+  float: left;
+}
+
+.pagination .page-count{
+  display: flex;
+  float: right;
+  margin-right: 30px;
+}
+
+.pagination .pagination-info {
+  display: flex;
+}
+
+.pagination .row-per-page {
+  margin-right: 5px;
+}
+
+.pagination-page-right, .pagination-page-left {
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.pagination-page-disable {
+  color: #866830;
+  margin: 0 5px;
+}
+
+#musicInfoTable {
+  width: 100%;
+  border-spacing: 1px;
+}
+
+#musicInfoTable th, #music-info-table td {
+  padding: 5px;
+}
+#musicInfoTable th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  color: white;
+  background-color: #835449;
+}
+
+#musicInfoTable tr:nth-child(odd) { background-color: white; }
+#musicInfoTable tr:nth-child(even) { background-color: #f2f2f2; }
+#musicInfoTable tr:hover {background-color: #ddd;}
+
+#musicInfoTable {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#musicInfoTable td, #musicInfoTable th {
+  border: 1px solid #ddd;
+  padding: 5px;
+}
+
+#musicInfoTable th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  color: white;
+  background-color: #61a095;
+}
+main {
+  margin: 0px 100px;
+}
 .login-page {
   width: 360px;
   padding: 8% 0 0;

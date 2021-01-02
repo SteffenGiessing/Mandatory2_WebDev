@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <script src="../javascript/jquery-3.5.1.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../javascript/functions.js"></script>
     <script type="text/javascript" src="../javascript/login.js"></script>
     <link rel="stylesheet" href="css.css">
     
@@ -22,7 +23,7 @@
         <input type="text" id="state"placeholder="State"/>
         <input type="text" id="country"placeholder="Country"/>
         <input type="zip" id="postalCode"placeholder="Postal Code"/>
-        <input type="tel" id="phone"pattern="[0-9]" placeholder="Phone"/>
+        <input type="tel" id="phone" placeholder="Phone"/>
         <input type="text"id="fax" placeholder="Fax"/>
         <input type="email"id="email"placeholder="Email address"/>
         <button class="createUser">create</button>

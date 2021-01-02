@@ -5,6 +5,7 @@
 </head>
 <body>
 <header>
+    <script type="text/javascript" src="../javascript/login.js"></script>
     <link rel="stylesheet" type="text/css" href="css.css">
     <img id="logo" src="../img/musikmix.png">
     <div id="headerTitle">Steffens music store</div>
@@ -12,8 +13,9 @@
 <nav>
     <section id="mainMenu">
         <a href="home.php">Home</a>
-        <a href="menu.php">Login</a>
-        <a href="contact.php">Contact</a>
+        <a href="login.php">Login</a>
+        <a href="profile.php">Profile</a>
+        <a href="home.php" onclick="signOut()">Sign Out</a>
     </section>
 </nav>
 

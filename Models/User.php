@@ -1,13 +1,14 @@
 <?php
-require_once('../DB_Handler/DB_con.php');
 
-class customer extends DB_Connect
+require_once('../../DB_Handler/DB_con.php');
+
+class user extends DB_Connect
 {   
     //ValidateLogin
     function validateLogin ($email, $password){
 
         $query =<<<'SQL'
-        SELECT Email, Password 
+        SELECT CustomerId, FirstName, LastName, Password, Email, Password 
         FROM customer 
         WHERE Email = ?;
 SQL;
@@ -19,8 +20,17 @@ SQL;
         $row = $stmt->fetch();
 
         $this->email = $email;
+
         //Checks the password
-        return (password_verify($password, $row['Password']));
+        if(password_verify($password, $row['Password'])) {
+            $_SESSION['userId'] = $row['CustomerId'];
+            $_SESSION['firstName'] = $row['FirstName'];
+            $_SESSION['lastName'] = $row['LastName'];
+            $_SESSION['email'] = $email;
+            return true;
+        } else {
+            return false;
+        }
 
     }
 
@@ -62,4 +72,10 @@ SQL;
         }
     }
 }
+
+function signOut () {
+    session_destroy();
+    return "User Logged Out";
+}
+
 ?>
