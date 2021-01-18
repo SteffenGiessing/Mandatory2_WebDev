@@ -2,9 +2,6 @@ let apiUrl;
 const POST = "POST";
 const GET = "GET";
 
-
-
-
 function setUpTrackTable(data) {
     console.log(data);
      let table = "";
@@ -13,11 +10,11 @@ function setUpTrackTable(data) {
              playtime = millisecondsToMinutes(trackInfo.playtime);
              table += '<tr data-id="' + trackInfo.trackId + '" id="track">';
                     table += "<td>" + trackInfo.title + "</td>";
+                    table += "<td>" + trackInfo.artist + "</td>";
+                    table += "<td>" + trackInfo.album + "</td>";
+                    table += "<td>" + trackInfo.genre + "</td>";
+                    table += "<td>" + trackInfo.price + "$</td>";
                      table += "<td>" + playtime + "</td>";
-                     table += "<td>" + trackInfo.artist + "</td>";
-                     table += "<td>" + trackInfo.album + "</td>";
-                     table += "<td>" + trackInfo.genre + "</td>";
-                     table += "<td>" + trackInfo.price + "$</td>";
                      table +=  "<?php> if(isset($_SESSION['ADMIN'])){?>"
                      table += '<td id="purchase-column"><span><i class="fas fa-shopping-basket" id="purchase-icon"></i></span></td>';
                      table += "<?php } ?>";
@@ -54,12 +51,15 @@ function updatePagination(maxRows, offset, currentPage){
     $('.pagination-info').html(returnHTML);
 }
 function setupTrackModal(data) {
+    console.log(data)
+  
     let playtime = millisecondsToMinutes(data.playtime);
     $("#track-modal-title h3").text(data.title + " - (" + data.artist + ")");
     $("#album").find("p:eq(1)").text(data.album);
     $("#genre").find("p:eq(1)").text(data.genre);
     $("#playTime").find("p:eq(1)").text(playtime);
     $("#mediaType").find("p:eq(1)").text(data.mediatype);
+    $("#purchase").find("p:eq(1)").text(data.price);
     if(data.composer == null) {
         $("#composer").find("p:eq(0)").text("No composers credited for this song.");
 
@@ -71,6 +71,11 @@ function setupTrackModal(data) {
     $("#composer").find("p:eq(1)").text(data.composer);
     let fileSize = bytesToSize(data.fileSize);
     $("#fileSize").find("p:eq(1)").text(fileSize);
+    $("#hiddenId").val(data.TrackId);
+    $("#hidden_album").val(data.album);
+    $("#hidden_genre").val(data.genre);
+    $("#hidden_composer").val(data.composer);
+    $("#hidden_price").val(data.price);
 
     $("#track-modal").show();
 }
@@ -112,14 +117,6 @@ function setupAlbumModal(data) {
     $("#album-modal").show();
 }
 
-function setupArtistModal(data) {
-    $("#artist-modal-title h3").text(data.title);
-    $("#artist-albums").find("p:eq(1)").text(data.albums);
-    $("#artist-tracks").find("p:eq(1)").text(data.tracks);
-    $("#artist-genre").find("p:eq(1)").text(data.genre);
-
-    $("#artist-modal").show();
-}
 function setupArtistModal(data) {
     $("#artist-modal-title h3").text(data.title);
     $("#artist-albums").find("p:eq(1)").text(data.albums);
@@ -192,6 +189,15 @@ function setApiUrl(entity, action) {
                     case "changePassword":
                         return "../Api/profile/editPassword.php";
                     }
+            case "purchase":
+                switch (action) {
+                    case "addToJson":
+                        return "../Api/JsonList/purchaseList.json";
+                    case "createInvoice":
+                        return "../Api/purchase/createInvoice.php";
+                    case "getUser":
+                        return "../Api/purchase/getCurrentProfile.php";
+                }
                 break;
            
     }

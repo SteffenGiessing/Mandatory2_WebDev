@@ -1,5 +1,59 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 40px;
+  border: 1px solid #888;
+  width: 80%;
+  height: 50%;
+  border-radius: 4px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+.modal-content .title {
+  border-bottom: 1px solid #835449;
+  border-bottom-width: small;
+  margin-bottom: 20px;
+}
+.modal-content div:not(:first-child) {
+  display: flex;
+  border-bottom: 1px solid #835449;
+  border-bottom-width: small;
+  margin-bottom: 15px;
+}
+
+.modal-content #mediaType {
+  display: flex;
+}
+
+.modal-content div p:first-child {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+#music-info-table {
+  width: 100%;
+  border-spacing: 1px;
+}
+
+#music-info-table th, #music-info-table td {
+  padding: 5px;
+}
+
+#music-info-table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  color: white;
+  background-color: #835449;
+}
+
+
+#music-info-table tr:nth-child(odd) { background-color: white; }
+#music-info-table tr:nth-child(even) { background-color: #f2f2f2; }
+#music-info-table tbody tr:hover {background-color: #ddd; cursor: pointer;}
+
 * {
   margin-bottom: 5px;
   margin-top: 0;

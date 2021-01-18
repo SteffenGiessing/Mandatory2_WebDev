@@ -7,10 +7,8 @@
     <script type="text/javascript" src="../javascript/functions.js"></script>
     <script type="text/javascript" src="../javascript/login.js"></script>
     <link rel="stylesheet" href="css.css">
-    
 </head>
 <body>
-
 <div class="login-page">
     <div class="form">
       <form class="register-form">

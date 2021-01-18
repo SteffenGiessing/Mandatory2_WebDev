@@ -13,7 +13,7 @@
     session_start();
     include("header.php");
     if(!isset($_SESSION['userId'])) {
-        header("Location: http://localhost/Exam/Html_Css/login.php?");
+        header("Location: login.php?");
         die();
     }
 ?>

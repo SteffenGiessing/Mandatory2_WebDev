@@ -108,7 +108,7 @@ SQL;
             $result = $stmt->fetch();
 
             $this->disconnect();
-        }catch (PDOException $e){
+        } catch (PDOException $e){
             die('{"status": "error", "connection": "' . $e->getMessage() . '"}');
             exit();
         }

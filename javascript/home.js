@@ -1,5 +1,10 @@
 $(document).ready(function () {
+    enableModalAction();
     getTableInfo(0,1);
+    $(".close").on("click", function () {
+        $(".modal").hide();
+    });
+
 $("#infoButton").click(function() {
     
 })
@@ -102,6 +107,43 @@ function getTableInfo(from , currentPage) {
     }
     
 });
+}
+function enableModalAction() {
+    console.log("Clicked");
+    $("#musicInfo").on("click", "tr",function(){
+        let trackId = $(this).attr("data-id");
+        let entity = $(this).attr("id");
+        console.log("ID: "  + entity);
+        let action ="getById";
+        let apiUrl = setApiUrl(entity, action);
+        $.ajax({
+            url: apiUrl,
+            type: GET,
+            data: {
+                id: trackId
+            },
+            success: function(data) {
+                console.log(data);
+                switch(entity) {
+                    case "track":
+                        setupTrackModal(data);
+                    break;
+                    case "album":
+                        setupAlbumModal(data);
+                    break;
+                    case "artist":
+                        setupArtistModal(data);
+                    break;
+                }
+            }, failure: function(e) {
+                console.log("Failure: " + e);
+            }, error: function(e){
+                console.log("error: " + e);
+                console.log(JSON.stringify(e));
+            }
+        })
+
+    });
 }
 
 function searchAlbums() {
