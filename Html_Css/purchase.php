@@ -16,6 +16,20 @@
             header("Location: login.php?");
             die();
         }
+        if(isset($_GET["action"])){
+            if($_GET["action"] == "delete") {
+                $cookie_data = stripslashes($_COOKIE["shopping_cart"]);
+                $cart_data = json_decode($cookie_data, true);
+                foreach($cart_data as $keys => $values) {
+                    if($cart_data[$keys]["item_id"] == $_GET["id"]){
+                        unset($cart_data[$keys]);
+                        $item_data = json_encode($cart_data);
+                        setcookie("shopping_cart", $item_data, time() + (86400 * 30));
+                        header("location:http://localhost/Exam/Html_Css/purchase.php");
+                    }
+                }
+            }
+        }
     ?>
 
     <main>
@@ -27,6 +41,7 @@
             <th>Price</th>
             <th>Quantity</th>
             <th>Total Price Pr Item</th>
+            <th>Remove Item</th>
         </tr>
     <?php
     if(isset($_COOKIE["shopping_cart"])){
@@ -43,6 +58,7 @@
             <td><?php echo $values["item_price"]; ?></td>
             <td><?php echo $values["item_quantity"]; ?></td>
             <td><?php echo number_format($values["item_quantity"] * $values["item_price"], 2); ?></td>
+            <td><a href="purchase.php?action=delete&id=<?php echo $values["item_id"]; ?>"><span>Remove</span></a></td>
 
         </tr>
         <?php
