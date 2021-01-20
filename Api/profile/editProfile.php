@@ -15,7 +15,7 @@ if(isset($_SESSION["userId"])) {
 
     $firstName = trim($data->firstNameChange); 
     $lastName = trim($data->lastNameChange); 
-    $company = trim($data->compnayChange); 
+    $company = trim($data->companyChange); 
     $address = trim($data->addressChange); 
     $city = trim($data->cityChange); 
     $state = trim($data->stateChange); 

@@ -13,7 +13,7 @@ $data = json_decode(file_get_contents("php://input"));
 
 if(isset($_SESSION["userId"])) {
      $userId = $_SESSION["userId"];
-     $invoiceDate = trim($data->$date);
+     $invoiceDate = date("Y-m-d h:i:s");
      $billingAddress = trim($data->billingAddress);
      $billingCity = trim($data->billingCity);
      $billingState = trim($data->billingState);

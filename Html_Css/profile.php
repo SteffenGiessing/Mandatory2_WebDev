@@ -7,6 +7,7 @@
     <script type="text/javascript" src="../javascript/functions.js"></script>
     <script type="text/javascript" src="../javascript/profile.js"></script>
     <link rel="stylesheet" href="css.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 </head>
 <body>
 <?php
@@ -37,6 +38,8 @@
                 <button class="editPassword">Change Password</button>
         </div>
     </div>
+    </div>
+    <div id="snackbar">Successfully Updated!</div>
 </main>
 </body>
 </html>

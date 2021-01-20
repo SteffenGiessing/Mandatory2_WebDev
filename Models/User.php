@@ -2,36 +2,63 @@
 
 require_once('../../DB_Handler/DB_con.php');
 
-class user extends DB_Connect
+class User extends DB_Connect
 {   
     //ValidateLogin
     function validateLogin ($email, $password){
-
-        $query =<<<'SQL'
+        $result = [];
+        try {
+        $query =<<<SQL
         SELECT CustomerId, FirstName, LastName, Password, Email, Password 
         FROM customer 
         WHERE Email = ?;
 SQL;
         $stmt = $this->pdo->prepare($query);
         $stmt->execute([$email]);
+
         if ($stmt->rowCount()===0){
-            return false;
+            $query = "SELECT Password FROM admin";
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute();    
+        
+            $adminPassword = $stmt->fetch();
+            
+            if(password_verify($password, $adminPassword["Password"])) {
+                $_SESSION['userId'] = 0;
+                $_SESSION['isAdmin'] = 1;
+                $result['isValid'] = true;
+                $result['isAdmin'] = true;
+                return $result;
+            } else {
+                $result['isValid'] = false;
+                return $result;
+            }
         }
-        $row = $stmt->fetch();
+    
+    
+            $row = $stmt->fetch();
 
-        $this->email = $email;
 
-        //Checks the password
-        if(password_verify($password, $row['Password'])) {
-            $_SESSION['userId'] = $row['CustomerId'];
-            $_SESSION['firstName'] = $row['FirstName'];
-            $_SESSION['lastName'] = $row['LastName'];
-            $_SESSION['email'] = $email;
-            return true;
-        } else {
-            return false;
+            if(password_verify($password, $row["Password"])){
+                $_SESSION['userId'] = $row['CustomerId'];
+                $_SESSION['firstName'] = $row['FirstName'];
+                $_SESSION['lastName'] = $row['LastName'];
+                $_SESSION['email'] = $email;
+                $_SESSION['isAdmin'] = 0;
+                $result['isValid'] = true;
+                $result['isAdmin'] = false;
+            } else {
+                $result['isValid'] = false;
+            }
+            
+            $this->disconnect();
+
+        } catch (PDOException $e) {
+            die('{"status": "error", "connection": "' . $e->getMessage() . '"}');
+            exit();
         }
 
+        return $result;
     }
 
     //Create an account. 
@@ -71,11 +98,10 @@ SQL;
             return true;
         }
     }
-}
 
 function signOut () {
     session_destroy();
     return "User Logged Out";
 }
-
+}
 ?>

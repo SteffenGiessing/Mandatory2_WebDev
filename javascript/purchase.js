@@ -30,15 +30,13 @@ function createInvoice(){
     
     //var today = new DATE().ToLocaleString();
    // var dateTime = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate();
-    let date = new Date().toJSON().slice(0, 19).replace('T', ' '); 
     let price = $("#finalPrice").val();
-    console.log(billingAddress, billingCity, billingCountry, billingPostalCode, billingState, date, price);
+    console.log(billingAddress, billingCity, billingCountry, billingPostalCode, billingState,  price);
     let apiUrl = setApiUrl("purchase", "createInvoice");
     $.ajax({
         url: apiUrl,
         type: POST,
         data: JSON.stringify( {
-            date: date,
             billingAddress: billingAddress,
             billingCity: billingCity,
             billingState: billingState,

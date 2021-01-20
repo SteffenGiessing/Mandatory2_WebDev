@@ -16,7 +16,7 @@
         $loginPassword = trim($data->loginPassword);
         
         http_response_code(200);
-        echo json_encode(array("isUserValid" => $user->validateLogin($loginEmail, $loginPassword)));
+        echo json_encode($user->validateLogin($loginEmail, $loginPassword));
     } else {
         http_response_code(400);
 

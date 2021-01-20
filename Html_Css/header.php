@@ -1,22 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <script type="text/javascript" src="../javascript/login.js"></script>
-    <link rel="stylesheet" type="text/css" href="css.css">
-</head>
-<body>
 <header>
-    <img id="logo" src="../img/musikmix.png">
-    <div id="headerTitle">Steffens music store</div>
-</header>
+<div class="img-title">
+    <?php if(isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] === 1){ ?>
+        <h1> Steffens Music Store - Admin <h1>
+    <?php } else { ?>
+        <h1> Steffens Music Store </h1>
+    <?php } ?>
 <nav>
-    <section id="mainMenu">
-        <a href="home.php">Home</a>
-        <a href="login.php">Login</a>
-        <a href="profile.php">Profile</a>
-        <a href="purchase.php">Purchase</a>
-        <a href="home.php" onclick="signOut()">Sign Out</a>
-    </section>
+    <div class="headers-icons">
+    <a href="home.php">
+        <i class="fas fa-compact-disc fa-3x" id="home-btn"></i>
+    </a>
+    <?php if(isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === 1)  { ?>
+        <i class="fas fa-plus-square fa-3x" id="admin-add-btn"></i>
+    <?php } ?>
+    <?php if(!isset($_SESSION["isAdmin"]) || $_SESSION["isAdmin"] === 0){ ?>
+    <a href="purchase.php">
+        <i class="fas fa-shopping-cart fa-3x h-icon" id="shopping-cart-btn"></i>
+    </a>
+    <?php } ?>
+    <?php if((!isset($_SESSION["isAdmin"]) || $_SESSION["isAdmin"] === 0) && (isset($_SESSION["userId"]) && $_SESSION["userId"] != 0)) { ?>
+        <a href="profile.php">
+        <i class="far fa-user fa-3x h-icon" id="profile-btn"></i>
+        </a>
+    <?php } ?>
+    <?php if(isset($_SESSION["userId"])) { ?>
+        <i class="fas fa-sign-out-alt fa-3x h-icon" id="sign-out-btn"></i>
+        <?php } else { ?>
+        <i class="fas fa-sign-in-alt fa-3x h-icon" id="sign-in-btn"></i>
+        <?php } ?> 
+    </div>
 </nav>
-</body>
-</html>
+</div>
+
+</header>
+

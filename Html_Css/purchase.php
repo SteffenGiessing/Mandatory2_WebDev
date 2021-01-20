@@ -7,7 +7,8 @@
     <script type="text/javascript" src="../javascript/functions.js"></script>
     <script type="text/javascript" src="../javascript/purchase.js"></script>
     <link rel="stylesheet" href="css.css">
-</head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    </head>
 <body>
     <?php 
         session_start();
@@ -54,7 +55,7 @@
         <tr>
             <td><?php echo $values["item_album"]; ?></td>
             <td><?php echo $values["item_genre"]; ?></td>
-            <td><?php echo $values["item_composer"]; ?></td>
+            <td><?php echo $values["item_composer"]; ?>
             <td><?php echo $values["item_price"]; ?></td>
             <td><?php echo $values["item_quantity"]; ?></td>
             <td><?php echo number_format($values["item_quantity"] * $values["item_price"], 2); ?></td>

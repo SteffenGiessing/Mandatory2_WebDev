@@ -1,3 +1,11 @@
+<?php
+  session_start();
+  if(isset($_SESSION["userId"])) {
+    header("Location: home.php");
+    die();
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,12 +43,6 @@
       </form>
     </div>
   </div>
-
-  <div class="loginRejectModal" id="modal">
-      <div class="modalContent" id="modalContent">
-          Email: <span id="modalEmail"></span><br>
-          
-      </div>
   </div>
 </body>
 </html>

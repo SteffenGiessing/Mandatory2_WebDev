@@ -1,5 +1,131 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
+
+
+
+#snackbar {
+  visibility: hidden; /* Hidden by default. Visible on click */
+  min-width: 250px; /* Set a default minimum width */
+  margin-left: -125px; /* Divide value of min-width by 2 */
+  background-color: #768349; /* Black background color */
+  color: #fff; /* White text color */
+  text-align: center; /* Centered text */
+  border-radius: 2px; /* Rounded borders */
+  padding: 16px; /* Padding */
+  position: fixed; /* Sit on top of the screen */
+  z-index: 1; /* Add a z-index if needed */
+  left: 50%; /* Center the snackbar */
+  bottom: 30px; /* 30px from the bottom */
+  border-radius: 4px;
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#snackbar.show {
+  visibility: visible; /* Show the snackbar */
+  /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+  However, delay the fade out process for 2.5 seconds */
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+.searchResults {
+  font-size: xx-large;
+}
+#searchBtn, #searchVal, #searchOption  {
+  font-size: medium;
+
+}
+
+header .header-icons {
+  display: flex;
+  float: right;
+  margin: 17px 25px 0px 25px;
+}
+.searchField {
+  text-align: center;
+}
+
+header .img-title {
+  text-align: center;
+}
+
+#searchBtn {
+  text-align: center;
+}
+header .home-title {
+  margin: 15px 0 5px 0px;
+  width: 345px;
+}
+.img-title a{
+  color: inherit;
+}
+header .home-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+header .header-icons i {
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+header .header-icons a {
+  color: inherit;
+}
+
+.flex-title {
+  font-size: xx-large;
+  text-align: center;
+}
+
+
+header #shopping-cart-btn:hover, header #profile-btn:hover, header #home-btn:hover, header #admin-add-btn:hover {
+  color: #ddd;
+}
+
+header #sign-out-btn:hover {
+  color: #ff7a66;
+}
+
+header #sign-in-btn:hover {
+  color: #79d67d;
+}
+.album-modal-add, .artist-modal-add {
+  display: none;
+}
+
+.pagination {
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: -8.5px;
+}
+.pagination .search-results-box {
+  float: left;
+}
+
+.pagination .page-count{
+  display: flex;
+  float: right;
+}
+
+.pagination .paginationInfo {
+  display: flex;
+}
+
+.pagination .rowPrPage {
+  margin-right: 5px;
+}
+
+.pagination-page-right, .pagination-page-left {
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.pagination-page-disable {
+  color: #866830;
+  margin: 0 5px;
+}
+
 .modal-content {
   background-color: #fefefe;
   margin: auto;
@@ -119,7 +245,7 @@ tbody tr:last-child td:nth-last-child(2) {
   padding-bottom: 12px;
   text-align: left;
   color: white;
-  background-color: #835449;
+  background-color: #1acc29;
 }
 
 #musicInfoTable tr:nth-child(odd) { background-color: white; }
@@ -167,7 +293,7 @@ main {
 }
 .modalContent {
   font-family: "Roboto", sans-serif;
-  background: #4CAF50;
+  background: #00e408;
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
@@ -212,13 +338,13 @@ nav section {
 }
 nav section#mainMenu {
   color: rgba(3, 16, 131, 0.747);
-  background-color: rgb(148, 194, 110);
+  background-color: #76b852;
   line-height: 2em;
 }
 header {
   padding: 2px 20px;
   color: rgb(9, 34, 63);
-  background-color: rgb(148, 194, 110); 
+  background-color: #76b852; 
   text-indent: 20px;
   font-weight: bold;
   font-size: 1.4em;
@@ -230,7 +356,7 @@ header {
   padding: 2px 20px;
   border-style: inset;
   color: rgb(161, 153, 78);
-  background-color: rgb(148, 194, 110); 
+  background-color: rgb(177, 22, 22); 
   text-indent: 20px;
   font-weight: bold;
   font-size: 1.4em;
@@ -251,7 +377,7 @@ header {
   cursor: pointer;
 }
 .form button:hover,.form button:active,.form button:focus {
-  background: #43A047;
+  background:  #2eec09;
 }
 .form .message {
   margin: 15px 0 0;
@@ -296,13 +422,9 @@ header {
   text-decoration: none;
 }
 .container .info span .fa {
-  color: #EF3B3A;
+  color: #2eec09;
 }
 body {
-  background: #76b852; /* fallback for old browsers */
-  background: -webkit-linear-gradient(right, #76b852, #8DC26F);
-  background: -moz-linear-gradient(right, #76b852, #8DC26F);
-  background: -o-linear-gradient(right, #76b852, #8DC26F);
   background: linear-gradient(to left, #76b852, #8DC26F);
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;

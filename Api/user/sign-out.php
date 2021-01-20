@@ -11,6 +11,6 @@ require_once("../../Models/User.php");
 $user = new User;
 
     http_response_code(201);
-    echo json_encode(array("isUserLoggedOut" => $user-signOut()));
+    echo json_encode(array("isUserLoggedOut" => $user->signOut()));
 
 ?>

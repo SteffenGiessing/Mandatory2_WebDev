@@ -1,6 +1,8 @@
 let apiUrl;
 const POST = "POST";
 const GET = "GET";
+const $regExInput = /^[A-Za-z0-9.,/_ ]*$/;
+
 
 function setUpTrackTable(data) {
     console.log(data);
@@ -14,10 +16,7 @@ function setUpTrackTable(data) {
                     table += "<td>" + trackInfo.album + "</td>";
                     table += "<td>" + trackInfo.genre + "</td>";
                     table += "<td>" + trackInfo.price + "$</td>";
-                     table += "<td>" + playtime + "</td>";
-                     table +=  "<?php> if(isset($_SESSION['ADMIN'])){?>"
-                     table += '<td id="purchase-column"><span><i class="fas fa-shopping-basket" id="purchase-icon"></i></span></td>';
-                     table += "<?php } ?>";
+                    table += "<td>" + playtime + "</td>";
                  table += "</tr>";
          }
      });
@@ -25,7 +24,6 @@ function setUpTrackTable(data) {
 }
 function setupAlbumTable(data){
     let table = '';
-    console.log("DATA: " + data[data.length - 1]);
     data.forEach(function(albumInfo, idx, array) {
         if (idx !== array.length - 1) {
             table += '<tr data-id="' + albumInfo.albumId + '" id="album">';
@@ -33,28 +31,44 @@ function setupAlbumTable(data){
                     table += "<td>" + albumInfo.artist + "</td>";
                     table += "<td>" + albumInfo.numOfTracks + "</td>";
                     table += "<td>" + albumInfo.albumPrice + "$</td>";
-                    table += '<td id="purchase-column"><span><i class="fas fa-shopping-basket" id="purchase-icon"></i></span></td>';
             table += "</tr>";
         }
     });
-    $("#music-info-table").find("tbody").html(table);
+    $("#musicInfoTable").find("tbody").html(table);
+}
+
+function setupArtistTable(data){
+    let table = '';
+    console.log("DATA: " + data[data.length - 1]);
+    data.forEach( function(artistInfo, idx, array) {
+        if (idx !== array.length - 1) {
+            table += '<tr data-id="' + artistInfo.artistId + '" id="artist">';
+                    table += "<td>" + artistInfo.artist + "</td>";
+                    table += "<td>" + artistInfo.numOfAlbums + "</td>";
+                    table += "<td>" + artistInfo.numOfTracks + "</td>";
+                    table += "<td>" + artistInfo.genres + "</td>";
+            table += "</tr>";
+
+        }
+    });
+    $("#musicInfoTable").find("tbody").html(table);
 }
 
 function updatePagination(maxRows, offset, currentPage){
-    $('.search-results').html(maxRows + ' Results');
+    $('.searchResults').html(maxRows + ' Results');
     var totalPages = Math.ceil(maxRows / offset)
     if (totalPages == 0) currentPage = 0;
     var returnHTML = "";
     returnHTML += (currentPage == 1 || currentPage == 0) ? "<p>Page:</p><p class='pagination-page-disable'><i class='fas fa-angle-left'></i></p>" : "<p>Page:</p><p class='pagination-page-left'><i class='fas fa-angle-left'></i></p>";
     returnHTML += "<p class='current-page' data-current='" + currentPage + "' data-total='" + totalPages + "'>" + currentPage + " / " + totalPages + "</p>";
     returnHTML += (currentPage == totalPages) ? "<p class='pagination-page-disable'><i class='fas fa-angle-right'></i></p>" : "<p class='pagination-page-right'><i class='fas fa-angle-right'></i></p>";
-    $('.pagination-info').html(returnHTML);
+    $('.paginationInfo').html(returnHTML);
 }
 function setupTrackModal(data) {
     console.log(data)
   
     let playtime = millisecondsToMinutes(data.playtime);
-    $("#track-modal-title h3").text(data.title + " - (" + data.artist + ")");
+    $("#trackModalTitle h3").text(data.name + " - (" + data.artist + ")");
     $("#album").find("p:eq(1)").text(data.album);
     $("#genre").find("p:eq(1)").text(data.genre);
     $("#playTime").find("p:eq(1)").text(playtime);
@@ -71,59 +85,45 @@ function setupTrackModal(data) {
     $("#composer").find("p:eq(1)").text(data.composer);
     let fileSize = bytesToSize(data.fileSize);
     $("#fileSize").find("p:eq(1)").text(fileSize);
-    $("#hiddenId").val(data.TrackId);
+
+    $("#hiddenId").val(data.trackId);
     $("#hidden_album").val(data.album);
     $("#hidden_genre").val(data.genre);
     $("#hidden_composer").val(data.composer);
     $("#hidden_price").val(data.price);
 
-    $("#track-modal").show();
-}
-function setupArtistTable(data){
-    let table = '';
-    console.log("DATA: " + data[data.length - 1]);
-    data.forEach( function(artistInfo, idx, array) {
-        if (idx !== array.length - 1) {
-            table += '<tr data-id="' + artistInfo.artistId + '" id="artist">';
-                    table += "<td>" + artistInfo.artist + "</td>";
-                    table += "<td>" + artistInfo.numOfAlbums + "</td>";
-                    table += "<td>" + artistInfo.numOfTracks + "</td>";
-                    table += "<td>" + artistInfo.genres + "</td>";
-            table += "</tr>";
-        }
-    });
-    $("#music-info-table").find("tbody").html(table);
+    $("#trackModal").show();
 }
 
 function setupAlbumModal(data) {
-    $("#album-modal-title h3").text(data.title + " - (" + data.artist + ")");
-    $("#album-tracks").find("p:eq(1)").text(data.tracks);
-    $("#album-genre").find("p:eq(1)").text(data.genre);
+    $("#albumModalTitle h3").text(data.title + " - (" + data.artist + ")");
+    $("#albumTracks").find("p:eq(1)").text(data.tracks);
+    $("#albumGenre").find("p:eq(1)").text(data.genre);
     let playtime = millisecondsToMinutes(data.totalPlaytime);
     console.log("PLAYTIME: " + playtime);
-    $("#album-playTime").find("p:eq(1)").text(playtime);
+    $("#albumPlayTime").find("p:eq(1)").text(playtime);
     if(data.composer == null) {
-        $("#album-composer").find("p:eq(0)").text("No composers credited for this song.");  
+        $("#albumComposer").find("p:eq(0)").text("No composers credited for this song.");  
     } else if(data.composer.split(",").length > 1) {
-        $("#album-composer").find("p:eq(0)").text("Composers:");
+        $("#albumComposer").find("p:eq(0)").text("Composers:");
     } else {
-        $("#album-composer").find("p:eq(0)").text("Composer:");
+        $("#albumComposer").find("p:eq(0)").text("Composer:");
     }
-    $("#album-composer").find("p:eq(1)").text(data.composer);
-    $("#album-mediaType").find("p:eq(1)").text(data.mediatype);
+    $("#albumComposer").find("p:eq(1)").text(data.composer);
+    $("#albumMediaType").find("p:eq(1)").text(data.mediatype);
     let totalFileSize = bytesToSize(data.totalFileSize);
-    $("#album-fileSize").find("p:eq(1)").text(totalFileSize);
-
-    $("#album-modal").show();
+    $("#albumFileSize").find("p:eq(1)").text(totalFileSize);
+    
+    $("#albumModal").show();
 }
 
 function setupArtistModal(data) {
-    $("#artist-modal-title h3").text(data.title);
-    $("#artist-albums").find("p:eq(1)").text(data.albums);
-    $("#artist-tracks").find("p:eq(1)").text(data.tracks);
-    $("#artist-genre").find("p:eq(1)").text(data.genre);
+    $("#artistModalTitle h3").text(data.title);
+    $("#artistAlbums").find("p:eq(1)").text(data.albums);
+    $("#artistTracks").find("p:eq(1)").text(data.tracks);
+    $("#artistGenre").find("p:eq(1)").text(data.genre);
 
-    $("#artist-modal").show();
+    $("#artistModal").show();
 }
 
 function millisecondsToMinutes(ms) {
@@ -137,7 +137,39 @@ function bytesToSize(bytes) {
     var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
     return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
 }
+ //Snackbar
+ function showSnackbar(){
+    let snackbar = document.getElementById("snackbar");
+    snackbar.className = "show";
+    
+    setTimeout(function(){snackbar.className = snackbar.className.replace("show", ""); }, 3000);
+    
+}
 
+    function signOut(){
+        $('#sign-out-btn').on('click', function () {
+            apiUrl = setApiUrl('user', 'sign-out');
+            $.ajax({
+                url: apiUrl,
+                type: POST,
+                success: function () {
+                    window.location.reload();
+                }, failure: function(e) {
+                    console.log('failure: ' + e);
+                }, error: function(e) {
+                    console.log('error: ' + e);
+                    console.log(JSON.stringify(e));
+                }
+            })
+        });
+    }
+
+//Sign in
+function signIn() {
+    $('#sign-in-btn').on('click', function () {
+        window.location.replace("Login.php");
+    });
+}
     
 function setApiUrl(entity, action) {
     switch (entity){
@@ -191,8 +223,6 @@ function setApiUrl(entity, action) {
                     }
             case "purchase":
                 switch (action) {
-                    case "addToJson":
-                        return "../Api/JsonList/purchaseList.json";
                     case "createInvoice":
                         return "../Api/purchase/createInvoice.php";
                     case "getUser":

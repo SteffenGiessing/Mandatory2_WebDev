@@ -20,7 +20,6 @@ $(document).ready(function() {
     }
 });
 function setupProfileTable(data){
-    Object.keys(data).forEach(function(keys)  {
         $("#firstname").val(data.FirstName);
         $("#lastname").val(data.LastName);
         $("#company").val(data.Company);
@@ -32,10 +31,9 @@ function setupProfileTable(data){
         $("#phone").val(data.Phone);
         $("#fax").val(data.Fax);
         $("#email").val(data.Email);
-    });
+ 
 }
 function EditUser(){
-    console.log("Hitting Edit");
     let firstNameChange = $("#firstname").val();
     let lastNameChange = $("#lastname").val();
     let companyChange = $("#company").val();
@@ -45,9 +43,25 @@ function EditUser(){
     let countryChange = $("#country").val();
     let postalCodeChange = $("#postalcode").val();
     let phoneChange = $("#phone").val();
-    let faxChange = $("#faxChange").val();
+    let faxChange = $("#fax").val();
     let emailChange = $("#email").val();
+
+    if( firstNameChange.length === 0  || lastNameChange.length === 0 || companyChange.length === 0  || addressChange.length === 0 || 
+        cityChange.length === 0 || stateChange.length === 0 || countryChange.length === 0 || postalCodeChange.length === 0 ||
+        phoneChange.length === 0 ||  faxChange.length === 0 ||  emailChange.length === 0 
+    ) {
+        $('div#snackbar').text('Please fill out all fields.');
+        showSnackbar();
+    } else if(
+        !firstNameChange.match($regExInput) || !lastNameChange.match($regExInput) || !companyChange.match($regExInput) || !cityChange.match($regExInput) || 
+        !stateChange.match($regExInput) || !countryChange.match($regExInput) || !postalCodeChange.match($regExInput) || !phoneChange.match($regExInput) || !faxChange.match($regExInput)
+    ){
+        $('div#snackbar').text("You Shall Not Pass!");
+        showSnackbar();
+    } else {
+
     let apiUrl = setApiUrl("profile", "editProfile");
+    console.log("hitting");
     $.ajax({
         url: apiUrl,
         type: POST,
@@ -65,15 +79,22 @@ function EditUser(){
             emailChange: emailChange
         }),
         success: function(data) {
-            console.log(data)
-            location.reload();
+            $('div#snackbar').text("Successfully updated");
+            showSnackbar();
+            
         }
     });
 }
+}
 function editPassword() {
-    console.log("hitting password change")
     let password = $("#password").val();
-    console.log(password)
+    if(password.length === 0){
+        $('div#snackbar').text("Please type your new password.");
+        showSnackbar();
+    } else if(!password.match($regExInput)) {
+        $('div#snackbar').text("You Shall Not Pass!");
+        showSnackbar();
+    }else {
     let apiUrl = setApiUrl("profile", "changePassword")
     $.ajax({
         url: apiUrl,
@@ -82,8 +103,10 @@ function editPassword() {
             password: password
         }),
         success: function(data){
-            console.log(data);
+            $('div#snackbar').text("Successfully updated");
+            showSnackbar();
         }
     })
+}
 }
 });

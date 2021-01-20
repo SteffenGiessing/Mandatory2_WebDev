@@ -20,7 +20,4 @@ if(isset($_SESSION["userId"])){
     echo json_encode(array("message" => "Bad Request"));
 
 }
-
- 
-
 ?>

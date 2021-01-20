@@ -23,11 +23,10 @@ function login(){
       loginPassword: loginPassword
     }),
     success: function(data){
-      console.log(data);
-      if (data.isUserValid === true){
+      isAdmin = data.isAdmin;
+      if (data.isValid === true){
           console.log("TRUE");
-          //window.location.replace("index.php");
-          window.location.replace("http://localhost/Exam/Html_Css/home.php");
+          window.location.reload();
         } else {
           console.log("ALERT");
           alert("Login credentials uncorrect");
